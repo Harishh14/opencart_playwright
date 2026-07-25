@@ -13,6 +13,8 @@ this.login = page.locator('input[value="Login"]');
 }
 //its a login page
 
+//change made by dev 2
+
 async loginUser(username:string,password:string){
     await this.username.fill(username);
     await this.password.fill(password);
