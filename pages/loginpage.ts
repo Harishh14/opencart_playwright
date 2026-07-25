@@ -13,7 +13,7 @@ this.login = page.locator('input[value="Login"]');
 }
 //its login object file and now we are testing branching concept
 
-//change made by dev 2
+// login page
 
 async loginUser(username:string,password:string){
     await this.username.fill(username);
