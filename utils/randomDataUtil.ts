@@ -9,7 +9,7 @@ export class randomDataUtil {
     static getLastName(): string {
         return faker.person.lastName();
     }
-
+    //random data generation methods
     static getFullName(): string {
         return faker.person.fullName();
     }
