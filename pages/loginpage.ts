@@ -11,6 +11,7 @@ this.username = page.locator('#input-email');
 this.password = page.locator('#input-password');
 this.login = page.locator('input[value="Login"]');
 }
+//its a login page
 
 async loginUser(username:string,password:string){
     await this.username.fill(username);
