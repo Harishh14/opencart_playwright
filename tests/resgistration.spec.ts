@@ -13,7 +13,7 @@ let myaccpgage: myaccountPage;
 let lp: loginpage;
 let email: string;
 let password: string;
-
+//login flow test case
 // let faker :randomDataUtil;
 test.beforeEach(async ({ page }) => {
     config = new testconfig();
