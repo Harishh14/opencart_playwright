@@ -32,7 +32,7 @@ export class registrationpage {
         this.newsletterNo = page.locator('input[name="newsletter"][value="0"]');
 
         this.privacyPolicy = page.locator('input[name="agree"]');
-
+        //reg page
         this.continueBtn = page.locator('input[value="Continue"]');
     }
 
