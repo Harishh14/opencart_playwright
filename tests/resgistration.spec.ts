@@ -1,55 +1,68 @@
 import { test, expect } from '@playwright/test';
 import { Homepage } from '../pages/Homepage';
-import { testconfig } from '../test.config';
-import { registrationpage } from '../pages/registrationpage'
-import { randomDataUtil } from '../utils/randomDataUtil'
+import { registrationpage } from '../pages/registrationpage';
+import { loginpage } from '../pages/loginpage';
 import { myaccountPage } from '../pages/myaccountPage';
-import { loginpage } from '../pages/loginpage'
+import { testconfig } from '../test.config';
+import { randomDataUtil } from '../utils/randomDataUtil';
 
 let homepage: Homepage;
+let registrationPage: registrationpage;
+let loginPage: loginpage;
+let myAccountPage: myaccountPage;
 let config: testconfig;
-let regpage: registrationpage;
-let myaccpgage: myaccountPage;
-let lp: loginpage;
-let email: string;
-let password: string;
-//login flow test 
-// let faker :randomDataUtil;
+
 test.beforeEach(async ({ page }) => {
     config = new testconfig();
-    homepage = new Homepage(page);
-    regpage = new registrationpage(page);
-    myaccpgage = new myaccountPage(page);
-    lp = new loginpage(page);
 
-    // faker = new randomDataUtil();
+    homepage = new Homepage(page);
+    registrationPage = new registrationpage(page);
+    loginPage = new loginpage(page);
+    myAccountPage = new myaccountPage(page);
+
     await page.goto(config.appurl);
 });
 
-// test.afterEach(async ({ page }) => {
-//     await page.waitForTimeout(3000);
-//     await page.close();
-
-// });
 test.describe('User Registration and Login Tests @loginflow', () => {
 
-    test('User registration test', async ({ page }) => {
+    test('should register a new user and login successfully', async ({page}) => {
 
-    await homepage.clickmyaccount();
-    await homepage.clickregister();
-    email = randomDataUtil.getEmail();
-    password = randomDataUtil.getPassword();
-    await regpage.registerUser(randomDataUtil.getFirstName(), randomDataUtil.getLastName(), email, randomDataUtil.getPhoneNumber(), password);
+        // Generate Test Data
+        const firstName = randomDataUtil.getFirstName();
+        const lastName = randomDataUtil.getLastName();
+        const email = randomDataUtil.getEmail();
+        const phone = randomDataUtil.getPhoneNumber();
+        const password = randomDataUtil.getPassword();
 
-    expect(await myaccpgage.isregSuccessful()).toBeTruthy();
-    await myaccpgage.clickLogout();
+        // Registration
+        await homepage.clickmyaccount();
+        await homepage.clickregister();
 
-})
+        await registrationPage.registerUser(
+            firstName,
+            lastName,
+            email,
+            phone,
+            password
+        );
 
-test('Login Test', async ({ page }) => {
-    await homepage.clickmyaccount();
-    await homepage.clicklogin();
-    await lp.loginUser(email, password);
-})
+        // Verify Registration
+        expect(await myAccountPage.isregSuccessful()).toBe(true);
 
-})
+        // Logout
+        await myAccountPage.clickLogout();
+
+        // Login
+        await homepage.clickmyaccount();
+        await homepage.clicklogin();
+
+        await loginPage.loginUser(email, password);
+
+        // Verify Login
+        expect(await myAccountPage.isloginSuccessful()).toBe(true);
+
+        
+
+    });
+
+});
