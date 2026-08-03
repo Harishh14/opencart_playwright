@@ -18,8 +18,8 @@ export class Homepage {
 
         //initialize locators
         this.myaccountbtn = page.locator("a[title='My Account']");
-        this.registerbtn = page.getByRole('link', { name: 'Register' });
-        this.loginbtn = page.getByRole('link', { name: 'Login' });
+        this.registerbtn = page.locator("//a[text()='Register']");
+        this.loginbtn = page.locator("//nav[@id='top']//a[text()='Login']");
         this.searchinput = page.getByPlaceholder('Search');
         this.searchbtn = page.locator("//input[@name='search']/following::button[1]");
 
